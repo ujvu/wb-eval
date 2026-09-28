@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第一期结业测评 · AI 教师工作坊</title>
+<style>
+:root{
+  --ink:#1f2733;--sub:#5b6b7c;--line:#e3e8ee;--bg:#f5f7fa;--card:#fff;
+  --brand:#2b6cb0;--brand2:#1a4e8a;--ok:#2f9e6e;--warn:#d98a00;--bad:#d64545;--gold:#b7791f;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.7}
+header{background:linear-gradient(135deg,#2b6cb0,#1a4e8a);color:#fff;padding:22px 20px 18px;text-align:center}
+header h1{margin:0;font-size:21px;letter-spacing:.5px}
+header p{margin:6px 0 0;font-size:13px;opacity:.9}
+main{max-width:820px;margin:0 auto;padding:18px 16px 50px}
+section.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 20px 16px;margin:16px 0;
+  box-shadow:0 1px 3px rgba(20,40,70,.04)}
+h2{font-size:15px;margin:0 0 6px;display:flex;align-items:center;gap:8px;color:var(--brand2)}
+h2 .step{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;
+  background:var(--brand);color:#fff;font-size:12px;flex:none}
+.hint{font-size:13px;color:var(--sub);margin:0 0 10px}
+.hint b{color:var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0}
+th,td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+th{background:#f0f4f8;font-weight:600;white-space:nowrap}
+td.num,th.num{text-align:center;white-space:nowrap}
+.badge{display:inline-block;padding:2px 11px;border-radius:999px;font-size:12.5px;font-weight:600}
+.b-ok{background:#e3f4ec;color:var(--ok)}.b-warn{background:#fbf0dc;color:var(--warn)}
+.b-bad{background:#fbe4e4;color:var(--bad)}.b-info{background:#e6eefb;color:var(--brand)}.b-gold{background:#f7ecd9;color:var(--gold)}
+.gaps{background:#fff8e6;border:1px solid #f0dfae;border-radius:8px;padding:8px 12px;font-size:12.5px;color:#7a5b00}
+.gaps:empty{display:none}
+.miss{color:var(--bad);font-weight:600}
+.flag{color:var(--warn);font-size:12.5px}
+.result-hero{border-radius:14px;padding:26px 20px;text-align:center;margin-bottom:14px}
+.rh-pass{background:linear-gradient(135deg,#e8f6ef,#d3eedf);border:1px solid #bfe3cf}
+.rh-continue{background:linear-gradient(135deg,#fdf3e0,#faeccf);border:1px solid #efd9a8}
+.result-hero .score{font-size:54px;font-weight:800;line-height:1.1}
+.rh-pass .score{color:var(--ok)}.rh-continue .score{color:var(--warn)}
+.result-hero .score small{font-size:16px;color:var(--sub);font-weight:400}
+.result-hero h3{margin:8px 0 4px;font-size:19px}
+.result-hero p{margin:4px 0 0;font-size:13.5px;color:var(--sub)}
+.qrbox{text-align:center;padding:20px;background:#fff;border:2px solid var(--ok);border-radius:14px;margin-top:14px}
+.qrbox img{width:240px;height:240px;border-radius:10px;border:1px solid var(--line);display:block;margin:0 auto}
+.qrbox .cap{font-size:15px;font-weight:700;margin-top:12px;color:var(--ok)}
+.qrbox .sub{font-size:12.5px;color:var(--sub);margin-top:4px}
+.qrbox .grpname{font-size:13px;color:var(--ink);margin-top:8px;font-weight:600}
+.gap-item{border-left:3px solid var(--warn);background:#fffdf5;padding:8px 12px;margin:8px 0;border-radius:0 8px 8px 0;font-size:13px}
+.gap-item b{display:block}
+.kv{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px 14px;font-size:12.5px;margin:6px 0}
+.kv div b{color:var(--sub);font-weight:400}
+details{margin:16px 0;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 16px}
+summary{cursor:pointer;font-weight:600;font-size:13.5px;color:var(--sub)}
+summary:hover{color:var(--brand)}
+details[open] summary{color:var(--brand2);margin-bottom:6px}
+details pre{font-size:12px;background:#f6f8fa;padding:10px;border-radius:8px;overflow:auto}
+button{border:none;border-radius:8px;padding:7px 16px;font-size:13px;cursor:pointer;background:var(--brand);color:#fff}
+button.ghost{background:#fff;color:var(--brand);border:1.5px solid var(--brand)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.row button{flex:none}
+input[type=text]{padding:8px 10px;border:1px solid var(--line);border-radius:7px;font-size:13px;flex:1;min-width:0}
+textarea{width:100%;padding:9px;border:1px solid var(--line);border-radius:7px;font-size:12px;font-family:ui-monospace,Menlo,Consolas,monospace;resize:vertical;background:#fbfcfe}
+.status{font-size:13px;margin-top:6px}
+.ok-text{color:var(--ok)}.warn-text{color:var(--warn)}
+.hidden{display:none}
+.empty-state{text-align:center;padding:50px 20px;color:var(--sub)}
+.empty-state .ico{font-size:48px;margin-bottom:12px}
+.empty-state p{margin:4px 0;font-size:14px}
+.empty-state p small{display:block;margin-top:6px;color:var(--sub)}
+footer{text-align:center;font-size:11.5px;color:var(--sub);padding:20px 16px 24px}
+</style>
+</head>
+<body>
+<header>
+  <h1>🌱 AI 教师工作坊 · 第一期结业测评</h1>
+  <p>安装「第一期结业测评」技能后，对 WorkBuddy 说一句话即可出分</p>
+</header>
+
+<main>
+
+<!-- ══════════ 结果区（自动填充） ══════════ -->
+<div id="resultWrap" class="hidden">
+
+  <section class="card">
+    <div class="result-hero rh-continue" id="hero">
+      <div class="score"><span id="totalScore">—</span><small> /100</small></div>
+      <h3 id="heroTitle">等待评分</h3>
+      <p id="heroSub">机器分 + 质量分</p>
+    </div>
+
+    <!-- ★ 二维码区域：仅在 ≥80 分时显示 -->
+    <div id="qrPanel" class="qrbox hidden">
+      <img id="qrImg" alt="第二期群二维码">
+      <div class="cap" id="qrCap">🎉 通过第一期 · 扫码加入第二期</div>
+      <div class="grpname">群名：<span id="qrGroupName"></span></div>
+      <div class="sub" id="qrSub">永久邀请链接 · 入群名单以评审公示为准</div>
+    </div>
+
+    <!-- ★ 未达标：提分清单 -->
+    <div id="continuePanel" class="hidden"><div id="gapList"></div></div>
+
+    <div class="row" style="margin-top:14px">
+      <button id="btnCopyCard">📤 复制提交卡（发到群里留档）</button>
+      <button class="ghost" id="btnReset">重新测评</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>评分明细（100 分全部来自报告）</h2>
+    <p class="hint"><b>机器分 65</b>由任务记录自动统计，<b>质量分 35</b>由 WorkBuddy 依真实对话证据评定（每项附依据）。红色「缺」按 0 分计。</p>
+    <div class="kv" id="metricsTable"></div>
+    <div class="gaps" id="gapsList"></div>
+
+    <h2 style="margin-top:14px">机器分 <span class="badge b-info" id="machBadge">— /65</span></h2>
+    <table id="machineTable">
+      <thead><tr><th>维度</th><th class="num">得分</th><th>明细（分/满分 · 依据）</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <h2 style="margin-top:14px">质量分 <span class="badge b-info" id="qualBadge">— /35</span></h2>
+    <table id="qualityTable">
+      <thead><tr><th>观察点</th><th class="num">得分</th><th>依据（来自报告证据）</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+</div>
+
+<!-- ══════════ 空状态（页面打开但还没收到数据） ══════════ -->
+<div id="emptyWrap" class="empty-state">
+  <div class="ico">⏳</div>
+  <p>等待 WorkBuddy 把测评结果传过来…</p>
+  <p><small>如果你看到了这行字，请确认你的 WorkBuddy 已经完成「第一期结业测评」技能，或在维护演示里打开。</small></p>
+</div>
+
+<!-- ══════════ 维护/演示区（默认折叠，学员不需要碰） ══════════ -->
+<details>
+<summary>🛠 没有自动打开？维护 / 演示</summary>
+  <p class="hint" style="margin-top:8px">正常情况下你不需要操作这里。这个折叠区域是给维护者做演示和兜底用的。</p>
+  <div class="row">
+    <input type="text" id="linkInput" placeholder="粘成绩单链接（含 #m=…）">
+    <button class="ghost" id="btnLink">解析链接</button>
+  </div>
+  <div class="row" style="margin-top:8px">
+    <textarea id="reportInput" rows="4" placeholder="或粘报告全文 / 提交卡…"></textarea>
+  </div>
+  <div class="row">
+    <button id="btnParse">解析并评分</button>
+    <button class="ghost" id="btnDemo1">演示·达标</button>
+    <button class="ghost" id="btnDemo2">演示·未达标</button>
+    <button class="ghost" id="btnClear">清空</button>
+  </div>
+  <div class="status" id="parseStatus"></div>
+</details>
+
+<footer>依据《P-14 评分机制》· 100 分全部来自 WorkBuddy 真实使用数据</footer>
+
+<script>
+/*CORE-START*/
+"use strict";
+var SCENARIOS=["家园沟通","台账文档","备课教研","数据统计","日程待办","成长档案","会务发布","电脑维护","技能与知识库","手机远程助理"];
+var TOOLCHAINS=["钉钉DWS","技能","知识库","AI听记","手机助理","系统维护"];
+var QUALITY_FIELDS=[["instructionClarity","指令三要素",3],["modeMatch","模式匹配",3],["boundary","边界声明",3],
+  ["humanConfirm","人工确认",3],["iteration","迭代纠偏",3],["safety","安全合规",5],
+  ["reusableArtifact","可复用成果",8],["sharing","带动分享",7]];
+
+function toNum(v){if(v===null||v===undefined||v==="")return null;var n=Number(v);return isFinite(n)?n:null;}
+function toBool(v){if(v===true||v==="true"||v===1||v==="是"||v==="已")return true;if(v===false||v==="false"||v===0||v==="否")return false;return null;}
+
+function blankMetrics(){
+  return {
+    meta:{name:"",campus:"",role:"",workbuddyVersion:"",dingtalkBound:null,workdirSet:null,
+          skillsInstalled:null,modesUsed:[],dataComplete:null,dataGaps:[]},
+    usage:{tasksTotal:null,tasksCompleted:null,tasksPending:null,activeDays:null,activeWeeks:null,
+           spanStart:"",spanEnd:"",failedTasks:null,artifactsTotal:null},
+    tasks:{effectiveClosedLoop:null,complexCount:null,top:[]},
+    coverage:{scenarios:[],toolchains:[],scenarioCount:null,toolchainCount:null},
+    quality:{}
+  };
+}
+
+function normalize(m,j){
+  if(!j||typeof j!=="object")return;
+  var t=j.meta;
+  if(t&&typeof t==="object"){
+    m.meta.name=String(t.name||"");m.meta.campus=String(t.campus||"");m.meta.role=String(t.role||"");
+    m.meta.workbuddyVersion=String(t.workbuddyVersion||t.version||"");
+    m.meta.dingtalkBound=toBool(t.dingtalkBound);m.meta.workdirSet=toBool(t.workdirSet);
+    m.meta.skillsInstalled=toNum(t.skillsInstalled);
+    m.meta.modesUsed=Array.isArray(t.modesUsed)?t.modesUsed.map(String):[];
+    m.meta.dataComplete=toBool(t.dataComplete);
+    m.meta.dataGaps=Array.isArray(t.dataGaps)?t.dataGaps.map(String):[];
+  }
+  var u=j.usage;
+  if(u&&typeof u==="object"){
+    var k;for(k in m.usage){if(m.usage.hasOwnProperty(k)&&u.hasOwnProperty(k)){if(k==="spanStart"||k==="spanEnd"){m.usage[k]=String(u[k]||"");}else{m.usage[k]=toNum(u[k]);}}}
+  }
+  var s=j.tasks;
+  if(s&&typeof s==="object"){
+    m.tasks.effectiveClosedLoop=toNum(s.effectiveClosedLoop);m.tasks.complexCount=toNum(s.complexCount);
+    if(Array.isArray(s.top))m.tasks.top=s.top;
+  }
+  var c=j.coverage;
+  if(c&&typeof c==="object"){
+    if(Array.isArray(c.scenarios))m.coverage.scenarios=c.scenarios.map(String);
+    if(Array.isArray(c.toolchains))m.coverage.toolchains=c.toolchains.map(String);
+    m.coverage.scenarioCount=toNum(c.scenarioCount);if(m.coverage.scenarioCount===null)m.coverage.scenarioCount=m.coverage.scenarios.length||null;
+    m.coverage.toolchainCount=toNum(c.toolchainCount);if(m.coverage.toolchainCount===null)m.coverage.toolchainCount=m.coverage.toolchains.length||null;
+  }
+  var q=j.quality;
+  if(q&&typeof q==="object"){
+    var i;
+    for(i=0;i<QUALITY_FIELDS.length;i++){var key=QUALITY_FIELDS[i][0];m.quality[key]=toNum(q[key]);
+      m.quality[key+"Evidence"]=q[key+"Evidence"]===undefined?"":String(q[key+"Evidence"]||"");}
+  }
+}
+
+function fallbackParse(m,text){
+  var grab=function(re){var mm=text.match(re);return mm?parseInt(mm[1],10):null;};
+  m.usage.tasksTotal=grab(/任务总数[^\d\n]{0,8}(\d+)/);
+  m.usage.tasksCompleted=grab(/已完成[^\d\n]{0,6}(\d+)/);
+  m.usage.activeDays=grab(/活跃天数[^\d\n]{0,6}(\d+)/);
+  m.usage.activeWeeks=grab(/活跃周数[^\d\n]{0,6}(\d+)/);
+  m.usage.artifactsTotal=grab(/产物文件总?数[^\d\n]{0,6}(\d+)/);
+  m.tasks.complexCount=grab(/复杂任务[^\d\n]{0,20}(\d+)/);
+  m.tasks.effectiveClosedLoop=grab(/有效闭环[^\d\n]{0,8}(\d+)/);
+  var sc=text.match(/覆盖了?\s*(\d+)\s*\/\s*10/);if(sc)m.coverage.scenarioCount=parseInt(sc[1],10);
+  var tc=text.match(/([=＝])\s*(\d+)\s*\/\s*6/);if(tc)m.coverage.toolchainCount=parseInt(tc[2],10);
+  var sp=text.match(/(\d{4}-\d{2}-\d{2})\s*[~～—-]\s*(\d{4}-\d{2}-\d{2})/);
+  if(sp){m.usage.spanStart=sp[1];m.usage.spanEnd=sp[2];}
+  var nm=text.match(/姓名[^\n]{0,4}[:：]\s*([^\s｜|,，、]{1,12})/);if(nm)m.meta.name=nm[1];
+  var lines=text.split(/\n/),i,ln;
+  var checked=function(name){for(i=0;i<lines.length;i++){ln=lines[i];if(ln.indexOf(name)>=0&&/☑|\[x\]|\[X\]|✅|■/.test(ln))return true;}return false;};
+  var arr=[],k2;
+  for(k2=0;k2<SCENARIOS.length;k2++){if(checked(SCENARIOS[k2]))arr.push(SCENARIOS[k2]);}
+  if(arr.length&&m.coverage.scenarioCount===null)m.coverage.scenarioCount=arr.length;
+  if(arr.length)m.coverage.scenarios=arr;
+  var tArr=[];
+  for(k2=0;k2<TOOLCHAINS.length;k2++){if(checked(TOOLCHAINS[k2]))tArr.push(TOOLCHAINS[k2]);}
+  if(tArr.length&&m.coverage.toolchainCount===null)m.coverage.toolchainCount=tArr.length;
+  if(tArr.length)m.coverage.toolchains=tArr;
+  m.meta.dingtalkBound=/已?绑定钉钉|dingtalkBound["']?\s*[:：]\s*true/.test(text)?true:null;
+  var modes=[];
+  if(/问一问|Ask/i.test(text))modes.push("ask");
+  if(/想一想|Plan/i.test(text))modes.push("plan");
+  if(/做一做|Craft/i.test(text))modes.push("craft");
+  if(modes.length)m.meta.modesUsed=modes;
+}
+
+function extractMetrics(text){
+  var res={src:null,m:blankMetrics(),gaps:[]};
+  if(!text||!text.replace(/\s/g,"")){res.gaps=computeGaps(res.m);return res;}
+  var jm=text.match(/```(?:metrics|json)\s*\n([\s\S]*?)```/);
+  if(jm){
+    try{normalize(res.m,JSON.parse(jm[1]));res.src="json";}catch(e){res.src=null;}
+  }
+  if(res.src!=="json"){
+    fallbackParse(res.m,text);
+    var has=false,k;for(k in res.m.usage){if(res.m.usage[k]!==null&&res.m.usage[k]!==""){has=true;break;}}
+    if(!has){var c2=res.m.coverage.scenarioCount;if(c2)has=true;}
+    res.src=has?"fallback":null;
+  }
+  res.gaps=computeGaps(res.m);
+  return res;
+}
+
+function computeGaps(m){
+  var g=[];
+  if(m.meta.name==="")g.push("姓名（无法确认是谁的报告）");
+  var fields=[["usage","tasksTotal","任务总数"],["usage","tasksCompleted","已完成数"],["usage","activeDays","活跃天数"],
+    ["usage","activeWeeks","活跃周数"],["tasks","effectiveClosedLoop","有效闭环数"],["tasks","complexCount","复杂任务数"],
+    ["coverage","scenarioCount","覆盖场景数"],["coverage","toolchainCount","工具链数"]];
+  for(var i=0;i<fields.length;i++){
+    var v=m[fields[i][0]][fields[i][1]];
+    if(v===null||v===undefined||v==="")g.push(fields[i][2]);
+  }
+  if(m.meta.dingtalkBound===null)g.push("是否绑定钉钉");
+  if(!(m.meta.modesUsed||[]).length)g.push("三种模式使用情况");
+  var missQ=0;
+  for(i=0;i<QUALITY_FIELDS.length;i++){if(m.quality[QUALITY_FIELDS[i][0]]===null||m.quality[QUALITY_FIELDS[i][0]]===undefined)missQ++;}
+  if(missQ)g.push("质量评分 "+missQ+"/8 项缺失（合计 35 分按 0 分计）");
+  return g;
+}
+
+function th(v,table){
+  if(v===null||v===undefined||!isFinite(v))return{score:0,miss:true};
+  for(var i=0;i<table.length;i++){if(v>=table[i][0])return{score:table[i][1],miss:false};}
+  return{score:table[table.length-1][1],miss:false};
+}
+function rateOf(m){
+  if(!m.usage.tasksTotal)return null;
+  var c=m.usage.tasksCompleted===null?0:m.usage.tasksCompleted;
+  return c/m.usage.tasksTotal;
+}
+function suggestBase(m){
+  var modes=(m.meta.modesUsed||[]).length,skills=m.meta.skillsInstalled,bound=m.meta.dingtalkBound,dir=m.meta.workdirSet;
+  if(bound&&dir&&modes>=3&&skills>=1)return 10;
+  if(bound&&dir&&modes>=2)return 8;
+  if((m.usage.tasksTotal||0)>0)return 5;
+  return 2;
+}
+
+function scoreMachine(m){
+  var dims=[],flags=[];
+  var pct=function(r){return r===null?"?":Math.round(r*100)+"%";};
+  var r=rateOf(m);
+  var base=suggestBase(m);
+  dims.push({key:"base",label:"使用基础与规范",max:10,auto:base,
+    items:[{label:"入门动作",score:base,max:10,basis:"绑钉钉="+m.meta.dingtalkBound+" · 工作目录="+m.meta.workdirSet+" · 模式"+(m.meta.modesUsed||[]).length+"/3 · 技能"+(m.meta.skillsInstalled===null?"?":m.meta.skillsInstalled)+"个"}]});
+  var w=th(m.usage.activeWeeks,[[4,7],[3,5],[2,3],[1,1],[0,0]]);
+  var d=th(m.usage.activeDays,[[12,5],[8,4],[5,3],[3,2],[1,1],[0,0]]);
+  var n=th(m.usage.tasksTotal,[[25,3],[15,2],[5,1],[0,0]]);
+  dims.push({key:"usage",label:"使用量与持续性",max:15,auto:w.score+d.score+n.score,items:[
+    {label:"活跃周数",score:w.score,max:7,basis:"W="+(m.usage.activeWeeks===null?"?":m.usage.activeWeeks)},
+    {label:"活跃天数",score:d.score,max:5,basis:"D="+(m.usage.activeDays===null?"?":m.usage.activeDays)},
+    {label:"任务条数（封顶）",score:n.score,max:3,basis:"N="+(m.usage.tasksTotal===null?"?":m.usage.tasksTotal)}]});
+  var rr=th(r===null?null:Math.round(r*100),[[80,8],[60,6],[40,4],[20,2],[0,0]]);
+  var e=th(m.tasks.effectiveClosedLoop,[[8,7],[5,5],[3,3],[1,1],[0,0]]);
+  var c=th(m.tasks.complexCount,[[3,5],[2,3],[1,1],[0,0]]);
+  dims.push({key:"tasks",label:"任务完成情况",max:20,auto:rr.score+e.score+c.score,items:[
+    {label:"闭环率",score:rr.score,max:8,basis:pct(r)+"（"+(m.usage.tasksCompleted===null?"?":m.usage.tasksCompleted)+"/"+(m.usage.tasksTotal===null?"?":m.usage.tasksTotal)+"）"},
+    {label:"有效闭环数",score:e.score,max:7,basis:"E="+(m.tasks.effectiveClosedLoop===null?"?":m.tasks.effectiveClosedLoop)},
+    {label:"复杂任务数",score:c.score,max:5,basis:"C="+(m.tasks.complexCount===null?"?":m.tasks.complexCount)}]});
+  var s=th(m.coverage.scenarioCount,[[7,12],[5,10],[3,7],[2,4],[1,2],[0,0]]);
+  var t=th(m.coverage.toolchainCount,[[5,8],[4,6],[3,5],[2,4],[1,2],[0,0]]);
+  dims.push({key:"coverage",label:"覆盖范围",max:20,auto:s.score+t.score,items:[
+    {label:"场景覆盖（十类）",score:s.score,max:12,basis:"S="+(m.coverage.scenarioCount===null?"?":m.coverage.scenarioCount)+"/10"+(m.coverage.scenarios.length?"："+m.coverage.scenarios.join("、"):"")},
+    {label:"工具链覆盖（六项）",score:t.score,max:8,basis:"T="+(m.coverage.toolchainCount===null?"?":m.coverage.toolchainCount)+"/6"+(m.coverage.toolchains.length?"："+m.coverage.toolchains.join("、"):"")}]});
+  if(m.usage.tasksTotal!==null&&m.usage.tasksTotal>=80&&(m.usage.activeWeeks||0)<=1)
+    flags.push("疑似刷量：任务 "+m.usage.tasksTotal+" 条但活跃周 ≤1，评分按去重口径复核");
+  if(r!==null&&r<0.2&&m.usage.tasksTotal>=15)
+    flags.push("闭环率偏低（"+pct(r)+"），请确认是统计口径还是半途而废");
+  if(m.meta.dataComplete===false)
+    flags.push("报告自带数据完整性声明为 false："+((m.meta.dataGaps||[]).join("；")||"未注明"));
+  var missAny=false,i,j;
+  for(i=0;i<dims.length;i++){for(j=0;j<dims[i].items.length;j++){if(dims[i].items[j].miss)missAny=true;}}
+  if(missAny)flags.push("存在缺失指标（红色「缺」），对应子项按 0 分计");
+  var total=0;for(i=0;i<dims.length;i++)total+=dims[i].auto;
+  return{dims:dims,flags:flags,total:total};
+}
+
+function clampScore(v,max){
+  var n=toNum(v);
+  if(n===null)return{score:0,miss:true};
+  return{score:Math.max(0,Math.min(max,Math.round(n))),miss:false};
+}
+function scoreQuality(m){
+  var q=m.quality||{},items=[],total=0,i;
+  for(i=0;i<QUALITY_FIELDS.length;i++){
+    var key=QUALITY_FIELDS[i][0];
+    var r=clampScore(q[key],QUALITY_FIELDS[i][2]);
+    items.push({key:key,label:QUALITY_FIELDS[i][1],score:r.score,max:QUALITY_FIELDS[i][2],
+      basis:q[key+"Evidence"]||(r.miss?"报告未给出":"（未附依据）")});
+    total+=r.score;
+  }
+  return{items:items,total:total};
+}
+
+function scoreAll(m){
+  var mach=scoreMachine(m),qual=scoreQuality(m);
+  return{mach:mach,qual:qual,total:mach.total+qual.total};
+}
+
+function gradeOf(total,passAt){
+  passAt=passAt||80;
+  if(total>=passAt)return{label:"通过 · 恭喜",cls:"b-ok",action:"已具备进入第二期的条件"};
+  if(total>=70)return{label:"接近通过",cls:"b-warn",action:"还差 "+(passAt-total)+" 分即可通过第一期结业"};
+  if(total>=60)return{label:"有条件通过",cls:"b-warn",action:"建议补做 3 个新任务后再来测一次"};
+  return{label:"继续努力",cls:"b-bad",action:"建议在群里约一对一 30 分钟陪跑"};
+}
+
+var DEMO_REPORT="# 演示·达标\n\n## 【一】任务总数：38（去重后）/ 已完成 31\n- 活跃天数：18，活跃周数：4\n\n## 【三】覆盖范围：6/10，工具链 4/6\n\n```metrics\n"+
+JSON.stringify({meta:{name:"演示·达标",campus:"九里园区",workbuddyVersion:"5.5.6",dingtalkBound:true,workdirSet:true,skillsInstalled:2,modesUsed:["ask","plan","craft"],dataComplete:true,dataGaps:[]},
+usage:{tasksTotal:38,tasksCompleted:31,activeDays:18,activeWeeks:4,spanStart:"2026-09-02",spanEnd:"2026-09-25",failedTasks:5,artifactsTotal:23},
+tasks:{effectiveClosedLoop:9,complexCount:4,top:[]},
+coverage:{scenarios:["家园沟通","台账文档","备课教研","数据统计","日程待办","会务发布"],toolchains:["钉钉DWS","技能","AI听记","系统维护"]},
+quality:{instructionClarity:3,modeMatch:3,boundary:2,humanConfirm:3,iteration:2,safety:5,reusableArtifact:8,sharing:5,
+  instructionClarityEvidence:"38 条指令中 29 条写明对象与格式",modeMatchEvidence:"先问→再想→再做 三模式切换",boundaryEvidence:"两次主动交代「只处理工作目录内文件」",humanConfirmEvidence:"群发前要求列差异预览",iterationEvidence:"PPT 大纲返工 2 轮后改流程",safetyEvidence:"人名均脱敏，AI 生成通知人工核对后发布",reusableArtifactEvidence:"已封装技能《问卷三步走》",sharingEvidence:"9-20 线上案例分享有听记记录"}},null,2)+"\n```";
+
+var DEMO_REPORT2="# 演示·未达标\n\n## 【一】任务总数：18（去重后）/ 已完成 14\n- 活跃天数：9，活跃周数：3\n\n## 【三】覆盖范围：5/10，工具链 2/6\n\n```metrics\n"+
+JSON.stringify({meta:{name:"演示·未达标",campus:"九里园区",workbuddyVersion:"5.5.3",dingtalkBound:true,workdirSet:true,skillsInstalled:0,modesUsed:["ask","plan"],dataComplete:true,dataGaps:[]},
+usage:{tasksTotal:18,tasksCompleted:14,activeDays:9,activeWeeks:3,spanStart:"2026-09-05",spanEnd:"2026-09-24",failedTasks:3,artifactsTotal:8},
+tasks:{effectiveClosedLoop:4,complexCount:1,top:[]},
+coverage:{scenarios:["家园沟通","备课教研","日程待办","台账文档","数据统计"],toolchains:["技能","AI听记"]},
+quality:{instructionClarity:2,modeMatch:2,boundary:1,humanConfirm:2,iteration:1,safety:3,reusableArtifact:4,sharing:3,
+  instructionClarityEvidence:"部分指令写明用途，但常见「帮我做个通知」缺少对象与格式",modeMatchEvidence:"用过问一问和做一做，想一想仅一次",boundaryEvidence:"未主动交代工作目录或脱敏",humanConfirmEvidence:"重要通知发出前人工核对过两次",iterationEvidence:"月计划返工 3 轮未能说明改进点",safetyEvidence:"知道脱敏，个别地方未替换完整",reusableArtifactEvidence:"整理了半份提示词，缺变量说明",sharingEvidence:"群里提过 2 个被采纳的问题"}},null,2)+"\n```";
+/*CORE-END*/
+
+/* ═══════════ 配置区 ═══════════ */
+var CONFIG={
+  passScore:80,                      /* ≥此分视为通过，出现二维码 */
+  qrImage:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQAQMAAAC6caSPAAAABlBMVEX///8AAABVwtN+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAADs0lEQVR4nO2cO27kMAyGOXDhco7go+hoM0fTUeYILlMY4Yo/H7J3kTIGF6CaCLK+aSj+5kMO0S2jMcZ3LCzM9Oq07WP+GFN5+kXLN+lGPgq5BenYJyu9fYTAw05PbIDldloOIn7LzrWQvMg2LDoQMTk9Yedh8jFfcSZ0VZFxUvZC8iNi8U1cdthcHvLXAvdu7GeikP8EEZPLdAixj+MB+vOEaBeSHrlqsozxUBzZ3Fs0WVd/kPFCfgNRq8FSfdux74ep2beQpMh5NFfV+a5U2eVziFtIUgTWP/CCtJUpsLpvuPd6IC8Znj7iokKSIhjLeCu69cVRVYgxlbBnRLDMlmK6IxeSDgnJlSERLCHWiWAIq2zyzFItKOQORFfmPrEuIiDJDB/w1c0MLKbeqZCsSEO2sJiiMvxPaRwE9Up135MmF5IQIf3zsCrqqkkiCqqwvsw138dJwYEpJCXS2EvfbwuB8DsdESyrI2uZXGiciUJyIhiLCjH5Ppk+AetBgKcj7NmpkFuQxnPou9Iyi321QvdwW7XvJRkpJB+CRpO1JD5EZKW3j58JE9hLZlFISkRzwFP7UEtv4sgmu17o5jgwhWREyP0UD9X6ug/JiB0Eush4IUkRqC8zwp4IcNRlKTRZs5VOav1CbkDclBr2HJoZdomA4rWpsmstxEKyIjS7S8JovQa1Oevwism9WW+F7kIyImFRW0GAc0kSm2WRureQtMjMRmByt74uRfvJ91jYU0haxDRZYx3Sxf2iyeT9Kch4ITchdvcX9ZpQVcSgMjTsuXplIemQFsW4F2t34mF9+3BFtvNBFuIWkhPBw8MujNq7EtaPRoUmI99x3a2QpEjzKirujkb7qbnJx5mYmowr34UkRfDHb7Nt7rKIgCiU+iTPhdyDwP/I2rqe5L+jQ2/tp5hyIWkRikah5hjXepu1L1bLIn21kJRIlLTJkkS6fL80xofIHNnoQnIidAp7cAXxEbeh7I6ipSgzfykkJ9LwSvUbMuya7MPlWTtRfKoqFPKbSOsznUfFLKzqH565V7K2gAvJisSwAEc/j5AQaLXMArKLfHH8pgtsIfkQc1n//swvy3S/sm/0pf1USE6ki+ntChTHN9g98hKEuGyreg24kKTIxvPL+t2u0OiZsNLNh6YmX/7fRSH3IDPJoGhfYPgb9F9TFpISmVHNC0UavWxhEowp/W39QlIhJrB2SzS6E35hlPU2lNV2LppcSC6E3bgM9dXvlzqR/aOnF3ukGwWBQnIit4w/zb2vKHimBUoAAAAASUVORK5CYII=",
+                                     /* 第二期群二维码：已嵌入真实图（data URI）；如需替换，改这里或用 ?qr=URL 临时覆盖 */
+  qrGroupName:"AI 赋能工作坊第 2 期",
+  qrCaption:"🎉 通过第一期 · 扫码加入第二期",
+  qrSubline:"永久邀请链接 · 入群名单以评审公示为准"
+};
+
+/* ═══════════ UI 接线 ═══════════ */
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var state={res:null,mach:null,qual:null,total:null,passAt:CONFIG.passScore};
+
+  function applyResult(res){
+    state.res=res;
+    if(res.src){state.mach=scoreMachine(res.m);state.qual=scoreQuality(res.m);state.total=state.mach.total+state.qual.total;}
+    else{state.mach=null;state.qual=null;state.total=null;}
+    render();
+  }
+
+  function render(){
+    if(!state.res||!state.res.src){return;}
+    $("emptyWrap").classList.add("hidden");
+    $("resultWrap").classList.remove("hidden");
+
+    var m=state.res.m,pass=state.total>=state.passAt,g=gradeOf(state.total,state.passAt);
+
+    /* hero */
+    var hero=$("hero");
+    hero.className="result-hero "+(pass?"rh-pass":"rh-continue");
+    if(pass){$("heroTitle").textContent="🎉 "+state.total+" 分 · 通过第一期结业";}
+    else{$("heroTitle").textContent="继续完成第一期 · 还差 "+(state.passAt-state.total)+" 分";}
+    $("heroSub").textContent="机器分 "+state.mach.total+"/65 + 质量分 "+state.qual.total+"/35 · "+g.label+" · "+g.action;
+    $("totalScore").textContent=state.total;
+
+    /* QR 面板（仅 ≥ passScore 时显示） */
+    if(pass){
+      $("qrPanel").classList.remove("hidden");
+      var src=CONFIG.qrImage||(new URLSearchParams(location.search)).get("qr")||"";
+      if(src){$("qrImg").src=src;}
+      $("qrGroupName").textContent=CONFIG.qrGroupName;
+      $("qrCap").textContent=CONFIG.qrCaption;
+      $("qrSub").textContent=CONFIG.qrSubline;
+      $("continuePanel").classList.add("hidden");
+    }else{
+      $("qrPanel").classList.add("hidden");
+      var gl="";
+      var ADVICE={base:"补齐钉钉绑定、工作目录设置，三种模式各实跑一次。",
+        usage:"每周挑 2–3 天用 WorkBuddy 做一件真实小事。活跃周数比任务条数值钱。",
+        tasks:"把开了头的任务收口成「有产物且已使用」，再补 1 个多步骤任务。",
+        coverage:"在已会场景外再加 1–2 类，推荐台账文档、日程待办。",
+        instructionClarity:"指令写全三要素：做什么 + 给谁 + 要什么格式。",
+        modeMatch:"记住口诀「不确定先问，复杂先想，明确再做」。",
+        boundary:"开工前加一句：只处理工作目录内文件；人名手机号先脱敏。",
+        humanConfirm:"发布前固定核对时间/地点/对象/数字/专有名称。",
+        iteration:"返工后把指令改写成可复用的模板，下次直接套。",
+        safety:"两句底线：人名手机号脱敏后再给 AI；AI 起草、人负责终审。",
+        reusableArtifact:"把最顺手的提示词整理成模板（变量用 [ ] 标出）。",
+        sharing:"在群里做一次 3 分钟案例分享，既加分又能直通二期。"};
+      state.mach.dims.forEach(function(d){
+        if(d.auto<d.max){gl+='<div class="gap-item"><b>'+d.label+"：丢 "+(d.max-d.auto)+" 分</b>"+ADVICE[d.key]+"</div>";}
+      });
+      state.qual.items.forEach(function(it){
+        if(it.score<it.max){gl+='<div class="gap-item"><b>'+it.label+"：丢 "+(it.max-it.score)+" 分</b>"+(ADVICE[it.key]||"")+"</div>";}
+      });
+      $("continuePanel").classList.remove("hidden");
+      $("gapList").innerHTML=gl?'<div style="font-weight:600;margin-bottom:4px">📋 提分清单</div>'+gl:"";
+    }
+
+    /* 评分明细 */
+    var kv=[["姓名",m.meta.name||"?"],["园区",m.meta.campus||"?"],["任务总数",m.usage.tasksTotal],["已完成",m.usage.tasksCompleted],
+      ["活跃天数",m.usage.activeDays],["活跃周数",m.usage.activeWeeks],["有效闭环",m.tasks.effectiveClosedLoop],["复杂任务",m.tasks.complexCount],
+      ["场景覆盖",(m.coverage.scenarioCount===null?"?":m.coverage.scenarioCount)+"/10"],["工具链",(m.coverage.toolchainCount===null?"?":m.coverage.toolchainCount)+"/6"]];
+    $("metricsTable").innerHTML=kv.map(function(x){return "<div><b>"+x[0]+"：</b>"+(x[1]===null||x[1]===undefined||x[1]===""?"<span class='miss'>缺</span>":x[1])+"</div>";}).join("");
+    $("gapsList").innerHTML=state.res.gaps.length?("⚠️ 证据缺口（对应项按 0 分计）："+state.res.gaps.join("；")):"";
+
+    var tb=$("machineTable").querySelector("tbody");tb.innerHTML="";
+    state.mach.dims.forEach(function(d){
+      var tr=document.createElement("tr");
+      tr.innerHTML="<td>"+d.label+"</td><td class='num'><b style='font-size:15px'>"+d.auto+"</b>/"+d.max+"</td><td style='font-size:12px'>"+
+        d.items.map(function(it){return it.label+" <b>"+it.score+"</b>/"+it.max+(it.miss?' <span class="miss">缺</span>':"")+" <span style='color:var(--sub)'>（"+it.basis+"）</span>";}).join("<br>")+"</td>";
+      tb.appendChild(tr);
+    });
+    $("machBadge").textContent=state.mach.total+" /65";
+
+    var qb=$("qualityTable").querySelector("tbody");qb.innerHTML="";
+    state.qual.items.forEach(function(it){
+      var tr=document.createElement("tr");
+      tr.innerHTML="<td>"+it.label+"</td><td class='num'><b>"+it.score+"</b>/"+it.max+(it.miss?' <span class="miss">缺</span>':"")+"</td><td style='font-size:12px;color:var(--sub)'>"+it.basis+"</td>";
+      qb.appendChild(tr);
+    });
+    $("qualBadge").textContent=state.qual.total+" /35";
+
+    var flags=document.querySelectorAll("#resultWrap .flag");
+    for(var fi=0;fi<flags.length;fi++){flags[fi].parentNode.removeChild(flags[fi]);}
+    if(state.mach.flags.length){$("machineTable").insertAdjacentHTML("afterend",'<div class="flag">⚑ '+state.mach.flags.join("<br>⚑ ")+"</div>");}
+  }
+
+  /* 维护演示区 */
+  $("btnParse").addEventListener("click",function(){
+    var s=$("parseStatus");var t=$("reportInput").value.trim();
+    if(!t){s.innerHTML='<span class="warn-text">请先粘报告全文</span>';return;}
+    applyResult(extractMetrics(t));
+    s.innerHTML='<span class="ok-text">✅ 已解析</span>';
+  });
+  $("btnDemo1").addEventListener("click",function(){$("reportInput").value=DEMO_REPORT;$("btnParse").click();});
+  $("btnDemo2").addEventListener("click",function(){$("reportInput").value=DEMO_REPORT2;$("btnParse").click();});
+  $("btnClear").addEventListener("click",function(){$("reportInput").value="";$("parseStatus").textContent="";});
+  $("btnLink").addEventListener("click",function(){
+    var v=$("linkInput").value.trim();if(!v){return;}
+    var i=v.indexOf("#m=");if(i<0){$("parseStatus").innerHTML='<span class="warn-text">链接里没有 #m= 数据段</span>';return;}
+    try{applyResult(extractMetrics("```metrics\n"+decodeURIComponent(v.slice(i+3))+"\n```"));}
+    catch(e){$("parseStatus").innerHTML='<span class="warn-text">解析失败：'+e.message+'</span>';}
+  });
+
+  $("btnCopyCard").addEventListener("click",function(){
+    if(!state.mach){return;}
+    var m=state.res.m;
+    function nz(v){return v===null||v===undefined?"?":v;}
+    var card="【结业提交卡】"+m.meta.name+"-"+m.meta.campus+"\n"+
+      "任务 "+nz(m.usage.tasksTotal)+" · 完成 "+nz(m.usage.tasksCompleted)+" · 活跃 "+nz(m.usage.activeDays)+" 天/"+nz(m.usage.activeWeeks)+" 周 · "+
+      "场景 "+nz(m.coverage.scenarioCount)+"/10 · 工具链 "+nz(m.coverage.toolchainCount)+"/6 · "+
+      "有效闭环 "+nz(m.tasks.effectiveClosedLoop)+" · 复杂任务 "+nz(m.tasks.complexCount)+"\n"+
+      "结业评分 "+state.total+"/100（机器 "+state.mach.total+" + 质量 "+state.qual.total+"） · "+gradeOf(state.total,state.passAt).label;
+    var done=function(){alert("✅ 提交卡已复制，发到钉钉群「AI 教师工作坊（第一期）」留档。");};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(card).then(done);}
+    else{var ta=document.createElement("textarea");ta.value=card;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);done();}
+  });
+
+  $("btnReset").addEventListener("click",function(){
+    try{history.replaceState(null,"",location.pathname+location.search);}catch(e){}
+    state.res=null;state.mach=null;state.qual=null;state.total=null;
+    $("linkInput").value="";$("reportInput").value="";$("parseStatus").textContent="";
+    $("resultWrap").classList.add("hidden");$("emptyWrap").classList.remove("hidden");
+  });
+
+  /* 自动加载（WorkBuddy open 链接带来的 #m=） */
+  (function(){
+    var h=location.hash||"";
+    if(h.indexOf("#m=")===0){
+      try{applyResult(extractMetrics("```metrics\n"+decodeURIComponent(h.slice(3))+"\n```"));}
+      catch(e){}
+    }
+  })();
+})();
+</script>
+</body>
+</html>
