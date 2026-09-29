@@ -90,7 +90,7 @@ footer{text-align:center;font-size:11.5px;color:var(--sub);padding:20px 16px 24p
       <p id="heroSub">机器分 + 质量分</p>
     </div>
 
-    <!-- ★ 二维码区域：仅在 ≥70 分时显示 -->
+    <!-- ★ 二维码区域：仅在 ≥75 分时显示 -->
     <div id="qrPanel" class="qrbox hidden">
       <img id="qrImg" alt="第二期群二维码">
       <div class="cap" id="qrCap">🎉 通过第一期 · 扫码加入第二期</div>
@@ -388,7 +388,7 @@ quality:{instructionClarity:2,modeMatch:2,boundary:1,humanConfirm:2,iteration:1,
 
 /* ═══════════ 配置区 ═══════════ */
 var CONFIG={
-  passScore:70,                      /* ≥此分视为通过，出现二维码 */
+  passScore:75,                      /* ≥此分视为通过，出现二维码 */
   qrImage:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQAQMAAAC6caSPAAAABlBMVEX///8AAABVwtN+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAADs0lEQVR4nO2cO27kMAyGOXDhco7go+hoM0fTUeYILlMY4Yo/H7J3kTIGF6CaCLK+aSj+5kMO0S2jMcZ3LCzM9Oq07WP+GFN5+kXLN+lGPgq5BenYJyu9fYTAw05PbIDldloOIn7LzrWQvMg2LDoQMTk9Yedh8jFfcSZ0VZFxUvZC8iNi8U1cdthcHvLXAvdu7GeikP8EEZPLdAixj+MB+vOEaBeSHrlqsozxUBzZ3Fs0WVd/kPFCfgNRq8FSfdux74ep2beQpMh5NFfV+a5U2eVziFtIUgTWP/CCtJUpsLpvuPd6IC8Znj7iokKSIhjLeCu69cVRVYgxlbBnRLDMlmK6IxeSDgnJlSERLCHWiWAIq2zyzFItKOQORFfmPrEuIiDJDB/w1c0MLKbeqZCsSEO2sJiiMvxPaRwE9Up135MmF5IQIf3zsCrqqkkiCqqwvsw138dJwYEpJCXS2EvfbwuB8DsdESyrI2uZXGiciUJyIhiLCjH5Ppk+AetBgKcj7NmpkFuQxnPou9Iyi321QvdwW7XvJRkpJB+CRpO1JD5EZKW3j58JE9hLZlFISkRzwFP7UEtv4sgmu17o5jgwhWREyP0UD9X6ug/JiB0Eush4IUkRqC8zwp4IcNRlKTRZs5VOav1CbkDclBr2HJoZdomA4rWpsmstxEKyIjS7S8JovQa1Oevwism9WW+F7kIyImFRW0GAc0kSm2WRureQtMjMRmByt74uRfvJ91jYU0haxDRZYx3Sxf2iyeT9Kch4ITchdvcX9ZpQVcSgMjTsuXplIemQFsW4F2t34mF9+3BFtvNBFuIWkhPBw8MujNq7EtaPRoUmI99x3a2QpEjzKirujkb7qbnJx5mYmowr34UkRfDHb7Nt7rKIgCiU+iTPhdyDwP/I2rqe5L+jQ2/tp5hyIWkRikah5hjXepu1L1bLIn21kJRIlLTJkkS6fL80xofIHNnoQnIidAp7cAXxEbeh7I6ipSgzfykkJ9LwSvUbMuya7MPlWTtRfKoqFPKbSOsznUfFLKzqH565V7K2gAvJisSwAEc/j5AQaLXMArKLfHH8pgtsIfkQc1n//swvy3S/sm/0pf1USE6ki+ntChTHN9g98hKEuGyreg24kKTIxvPL+t2u0OiZsNLNh6YmX/7fRSH3IDPJoGhfYPgb9F9TFpISmVHNC0UavWxhEowp/W39QlIhJrB2SzS6E35hlPU2lNV2LppcSC6E3bgM9dXvlzqR/aOnF3ukGwWBQnIit4w/zb2vKHimBUoAAAAASUVORK5CYII=",
                                      /* 第二期群二维码：已嵌入真实图（data URI）；如需替换，改这里或用 ?qr=URL 临时覆盖 */
   qrGroupName:"AI 赋能工作坊第 2 期",
