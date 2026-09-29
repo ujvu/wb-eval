@@ -90,7 +90,7 @@ footer{text-align:center;font-size:11.5px;color:var(--sub);padding:20px 16px 24p
       <p id="heroSub">机器分 + 质量分</p>
     </div>
 
-    <!-- ★ 二维码区域：仅在 ≥80 分时显示 -->
+    <!-- ★ 二维码区域：仅在 ≥70 分时显示 -->
     <div id="qrPanel" class="qrbox hidden">
       <img id="qrImg" alt="第二期群二维码">
       <div class="cap" id="qrCap">🎉 通过第一期 · 扫码加入第二期</div>
@@ -362,9 +362,9 @@ function scoreAll(m){
 }
 
 function gradeOf(total,passAt){
-  passAt=passAt||80;
+  passAt=passAt||70;
   if(total>=passAt)return{label:"通过 · 恭喜",cls:"b-ok",action:"已具备进入第二期的条件"};
-  if(total>=70)return{label:"接近通过",cls:"b-warn",action:"还差 "+(passAt-total)+" 分即可通过第一期结业"};
+  if(total>=60)return{label:"有条件通过",cls:"b-warn",action:"建议补做 3 个新任务后再来测一次"};
   if(total>=60)return{label:"有条件通过",cls:"b-warn",action:"建议补做 3 个新任务后再来测一次"};
   return{label:"继续努力",cls:"b-bad",action:"建议在群里约一对一 30 分钟陪跑"};
 }
